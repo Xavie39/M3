@@ -1,7 +1,7 @@
 package m3.uf5.pt1;
 
+import java.util.Date;
 import java.util.Deque;
-import java.util.Iterator;
 
 public class Entrada extends Publicacio implements Comparable<Entrada> {
 	public static final String SEPARADOR = "I";
@@ -11,9 +11,8 @@ public class Entrada extends Publicacio implements Comparable<Entrada> {
 	private Deque<Comentari> comentaris;
 
 	public Entrada(Usuari usuari, String titol, String text) {
-		super(usuari, null);
+		super(usuari, text);
 		this.titol = titol;
-		this.text = text;
 	}
 
 	@Override
@@ -40,11 +39,18 @@ public class Entrada extends Publicacio implements Comparable<Entrada> {
 
 	@Override
 	public int compareTo(Entrada o) {
-		// Primero compara por fecha
-		int compareDate = this.getData().compareTo(o.getData());
+		Date thisDate = this.getData();
+		Date otherDate = o.getData();
+
+		if (thisDate == null || otherDate == null) {
+			return 0;
+		}
+
+		int compareDate = thisDate.compareTo(otherDate);
 		if (compareDate != 0) {
 			return compareDate;
 		}
+
 		// Si las fechas son iguales, compara por título
 		return this.titol.compareTo(o.titol);
 	}
@@ -55,8 +61,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada> {
 
 	public int totalValoracionsPerValor(int valor) {
 		int suma = 0;
-		for (Iterator<Comentari> iterator = comentaris.iterator(); iterator.hasNext();) {
-			Comentari comentari = iterator.next();
+		for (Comentari comentari : comentaris) {
 			if (comentari.getValoracio() == valor) {
 				suma++;
 			}
@@ -70,8 +75,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada> {
 	public String valoracioMitjaEntrada() {
 		float suma = 0;
 
-		for (Iterator<Comentari> iterator = comentaris.iterator(); iterator.hasNext();) {
-			Comentari comentari = iterator.next();
+		for (Comentari comentari : comentaris) {
 			suma += comentari.getValoracio();
 		}
 

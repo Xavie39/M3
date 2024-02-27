@@ -1,5 +1,6 @@
 package m3.uf5.pt1;
 
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -9,12 +10,12 @@ public class Usuari {
 	private String nick;
 	private String mail;
 	// Cola
-	public Queue<Publicacio> publicacions;
+	public Queue<Publicacio> publicacions = new LinkedList<>();
 
-	public Usuari(String nick, String mail) {
+	public Usuari(String mail, String nick) {
 		super();
-		this.nick = nick;
-		this.mail = mail;
+		this.nick = mail;
+		this.mail = nick;
 	}
 
 	public String getNick() {
