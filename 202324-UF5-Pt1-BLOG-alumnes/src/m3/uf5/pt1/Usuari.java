@@ -10,7 +10,7 @@ public class Usuari {
 	private String nick;
 	private String mail;
 	// Cola
-	public Queue<Publicacio> publicacions = new LinkedList<>();
+	private Queue<Publicacio> publicacions = new LinkedList<>();
 
 	public Usuari(String mail, String nick) {
 		super();

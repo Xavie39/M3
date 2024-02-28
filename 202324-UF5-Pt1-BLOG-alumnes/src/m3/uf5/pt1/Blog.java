@@ -35,10 +35,11 @@ public class Blog {
 
 	private Entrada cercarEntradaPerDataTitol(Date data, String titol) {
 		for (Entrada entrada : entrades) {
-			if (entrada.getData().equals(data) && entrada.getTitol().equals(titol)) {
+			Date endate = entrada.getData();
+			if (endate.equals(data) && entrada.getText().equals(titol)) {
+				System.out.println("hola");
 				return entrada;
 			}
-
 		}
 		return null;
 	}
@@ -88,10 +89,11 @@ public class Blog {
 
 	public void comentarEntrada(String mail, Date data, String titol, String text, int valoracio) throws Exception {
 		try {
-	        Entrada en = cercarEntradaPerDataTitol(data, titol);
+			Entrada en = cercarEntradaPerDataTitol(data, titol);
+			Usuari user = this.cercarUsuariPerMail(mail);
 			for (Entrada entrada : entrades) {
 				if (entrada.equals(en)) {
-					entrada.afegirComentari(this.cercarUsuariPerMail(mail), text, valoracio);
+					entrada.afegirComentari(user, text, valoracio);
 				}
 			}
 		} catch (NullPointerException e) {
@@ -100,7 +102,7 @@ public class Blog {
 	}
 
 	public String imprimirEntrada(Date data, String titol) throws Exception {
-        Entrada en = cercarEntradaPerDataTitol(data, titol);
+		Entrada en = cercarEntradaPerDataTitol(data, titol);
 		for (Entrada entrada : entrades) {
 			if (entrada.equals(en)) {
 				entrada.imprimirPublicacio("", AMPLE_CONTENT);
@@ -111,21 +113,21 @@ public class Blog {
 
 	public String imprimirBlog() {
 		// Calcular el número de usuarios y el número de entradas en el blog
-	    int numUsuarios = usuaris.size();
-	    int numEntradas = entrades.size();
+		int numUsuarios = usuaris.size();
+		int numEntradas = entrades.size();
 
-	    // Crear la cabecera centrada con el número de usuarios y el número de entradas
-	    String header = StringUtils.center("Usuaris: " + numUsuarios + " ^ Entrades: " + numEntradas, 100, '^') + "\n";
+		// Crear la cabecera centrada con el número de usuarios y el número de entradas
+		String header = StringUtils.center("Usuaris: " + numUsuarios + " ^ Entrades: " + numEntradas, 100, '^') + "\n";
 
-	    // Concatenar todas las entradas del blog
-	    StringBuilder sb = new StringBuilder();
-	    for (Entrada entrada : entrades) {
-	        sb.append(entrada.imprimirPublicacio("", AMPLE_CONTENT));
-	        sb.append("\n");
-	    }
+		// Concatenar todas las entradas del blog
+		StringBuilder sb = new StringBuilder();
+		for (Entrada entrada : entrades) {
+			sb.append(entrada.imprimirPublicacio("", AMPLE_CONTENT));
+			sb.append("\n");
+		}
 
-	    // Concatenar la cabecera y todas las entradas
-	    return header + sb.toString();
+		// Concatenar la cabecera y todas las entradas
+		return header + sb.toString();
 	}
 
 	public void desarDadesBlog(String blogFilename) {
