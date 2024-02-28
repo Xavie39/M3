@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Blog {
 	public static final int AMPLE_LEFT = 15;
 	public static final int GAP = 3;
@@ -86,9 +88,9 @@ public class Blog {
 
 	public void comentarEntrada(String mail, Date data, String titol, String text, int valoracio) throws Exception {
 		try {
+	        Entrada en = cercarEntradaPerDataTitol(data, titol);
 			for (Entrada entrada : entrades) {
-				Date now = new Date();
-				if (entrada.getData().equals(data) && entrada.getTitol().equals(titol)) {
+				if (entrada.equals(en)) {
 					entrada.afegirComentari(this.cercarUsuariPerMail(mail), text, valoracio);
 				}
 			}
@@ -98,8 +100,9 @@ public class Blog {
 	}
 
 	public String imprimirEntrada(Date data, String titol) throws Exception {
+        Entrada en = cercarEntradaPerDataTitol(data, titol);
 		for (Entrada entrada : entrades) {
-			if (entrada.getData().equals(data) && entrada.getTitol().equals(titol)) {
+			if (entrada.equals(en)) {
 				entrada.imprimirPublicacio("", AMPLE_CONTENT);
 			}
 		}
@@ -107,8 +110,22 @@ public class Blog {
 	}
 
 	public String imprimirBlog() {
+		// Calcular el número de usuarios y el número de entradas en el blog
+	    int numUsuarios = usuaris.size();
+	    int numEntradas = entrades.size();
 
-		return null;
+	    // Crear la cabecera centrada con el número de usuarios y el número de entradas
+	    String header = StringUtils.center("Usuaris: " + numUsuarios + " ^ Entrades: " + numEntradas, 100, '^') + "\n";
+
+	    // Concatenar todas las entradas del blog
+	    StringBuilder sb = new StringBuilder();
+	    for (Entrada entrada : entrades) {
+	        sb.append(entrada.imprimirPublicacio("", AMPLE_CONTENT));
+	        sb.append("\n");
+	    }
+
+	    // Concatenar la cabecera y todas las entradas
+	    return header + sb.toString();
 	}
 
 	public void desarDadesBlog(String blogFilename) {

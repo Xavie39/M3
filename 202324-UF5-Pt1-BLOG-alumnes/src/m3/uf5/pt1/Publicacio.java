@@ -11,6 +11,7 @@ public abstract class Publicacio {
 		super();
 		this.usuari = usuari;
 		this.text = text;
+		this.data = new Date();
 		usuari.afegirPublicacio(this);
 	}
 
