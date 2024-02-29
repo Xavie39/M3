@@ -12,7 +12,7 @@ public class Usuari implements Serializable {
 	private String nick;
 	private String mail;
 	// Cola
-	private transient Queue<Publicacio> publicacions = new LinkedList<>();
+	private Queue<Publicacio> publicacions = new LinkedList<>();
 
 	public Usuari() {
 	}

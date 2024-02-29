@@ -1,7 +1,6 @@
 package m3.uf5.pt1;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -21,6 +20,9 @@ public class Comentari extends Publicacio implements Serializable {
 		valoracions.put(1, "1-Star");
 		valoracions.put(2, "2-Stars");
 		valoracions.put(3, "3-Stars");
+	}
+
+	public Comentari() {
 	}
 
 	public Comentari(Usuari usuari, String text, int valoracio) {
@@ -90,16 +92,6 @@ public class Comentari extends Publicacio implements Serializable {
 
 	public static Set<Integer> getValoracions() {
 		return valoracions.keySet();
-	}
-
-	@Override
-	public String toString() {
-		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-
-		// Formatear la fecha
-		String fechaFormateada = formatoFecha.format(this.getData());
-		return this.usuari.getNick() + ".- \"" + this.getText() + System.lineSeparator() + StringUtils.leftPad("|", 16)
-				+ StringUtils.leftPad(" ", 62) + fechaFormateada + ", valoracio: " + this.getValoracio();
 	}
 
 }

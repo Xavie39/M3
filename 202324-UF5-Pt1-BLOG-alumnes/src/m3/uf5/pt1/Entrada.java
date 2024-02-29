@@ -3,6 +3,7 @@ package m3.uf5.pt1;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -18,8 +19,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 	// Pila
 	private Deque<Comentari> comentaris = new LinkedList<>();
 
-	public Entrada(Usuari usuari, String text) {
-		super(usuari, text);
+	public Entrada() {
 	}
 
 	public Entrada(Usuari usuari, String text, String titol) {
@@ -110,23 +110,42 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 		Calendar calendar = Calendar.getInstance();
 		int mesActual = calendar.get(Calendar.MONTH);
 		String nombreMesActual = meses[mesActual];
-		int añoActual = calendar.get(Calendar.YEAR);
 
 		// Formatear la fecha con el nombre del mes actual y el año actual
 		SimpleDateFormat sdf = new SimpleDateFormat("'" + nombreMesActual + "' yyyy");
 		String fechaFormateada = sdf.format(calendar.getTime());
 		StringBuilder comentarisst = new StringBuilder();
 
-		for (Comentari comen : comentaris) {
+		comentaris.stream().sorted(Comparator.comparingInt(Comentari::getValoracio)).forEach(comen -> {
 			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 			String fechaFormateadacomen = formatoFecha.format(comen.getData());
-			comentarisst.append(comen.usuari.getNick()).append(".- ").append(comen.getText())
-					.append(System.lineSeparator()).append(StringUtils.leftPad("|", 16))
-					.append(StringUtils.leftPad(" ", 54)).append(fechaFormateadacomen).append(", valoracio: ")
-					.append(comen.getValoracio()).append("-Stars\n").append(StringUtils.leftPad("|", 16))
-					.append(StringUtils.leftPad(" ", 2)).append(System.lineSeparator())
-					.append(StringUtils.leftPad("|", 16)).append(StringUtils.leftPad(" ", 16));
-		}
+
+			// Envuelve el texto del comentario y agrega un espacio al principio de cada
+			// línea
+			String textoEnvuelto = WordUtils.wrap(comen.getText(), 52, "\n", true);
+			String[] lineasComentario = textoEnvuelto.split("\\r?\\n");
+
+			// Agrega el nombre de usuario, fecha y valoración del comentario
+			comentarisst.append(comen.usuari.getNick()).append(".- ").append(lineasComentario[0])
+					.append(System.lineSeparator());
+
+			// Agrega las líneas restantes del comentario con la barra al principio de cada
+			// línea
+			for (int i = 1; i < lineasComentario.length; i++) {
+				comentarisst.append(StringUtils.leftPad("|", 16)); // Agrega la barra al principio de la línea
+				comentarisst.append(StringUtils.leftPad(" ", 28)); // Espacio después del prefijo "|"
+				comentarisst.append(lineasComentario[i]).append(System.lineSeparator());
+			}
+
+			// Agrega la fecha y valoración del comentario
+			comentarisst.append(StringUtils.leftPad("|", 16));
+			comentarisst.append(StringUtils.leftPad(" ", 28)).append(fechaFormateadacomen).append(", valoracio: ");
+			comentarisst.append(comen.getValoracio()).append("-Stars").append(System.lineSeparator());
+			comentarisst.append(StringUtils.leftPad("|", 16));
+			comentarisst.append(StringUtils.leftPad(" ", 2)).append(System.lineSeparator());
+			comentarisst.append(StringUtils.leftPad("|", 16));
+			comentarisst.append(StringUtils.leftPad(" ", 16));
+		});
 
 		int[] totalValoracionesPorEstrella = new int[4];
 
@@ -149,8 +168,13 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 		String textoEnvuelto = WordUtils.wrap(this.text, 120, "\n", true);
 
 		String[] lineas = StringUtils.split(textoEnvuelto, "\n");
-		for (int i = 0; i < lineas.length; i++) {
-			lineas[i] = StringUtils.leftPad("|", 16) + StringUtils.leftPad(" ", 6) + lineas[i] + " ";
+
+		// Tratar la primera línea por separado sin agregar un espacio al principio
+		lineas[0] = StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 6) + lineas[0] + " ";
+
+		// Para las líneas restantes, agregar un espacio al principio y una barra
+		for (int i = 1; i < lineas.length; i++) {
+			lineas[i] = StringUtils.leftPad("|", 16) + StringUtils.leftPad(" ", 5) + lineas[i] + " ";
 		}
 
 		// Unir las líneas con un salto de línea
@@ -159,8 +183,8 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 		String res = fechaFormateada + StringUtils.leftPad("|", 4) + StringUtils.leftPad(" ", 30) + this.titol
 				+ System.lineSeparator() + this.usuari.getNick() + " lv:" + this.usuari.nivellUsuari()
 				+ textoConEspacios + System.lineSeparator() + valoracionesPorEstrellaStr.toString() + "Mitja : "
-				+ this.valoracioMitjaEntrada() + StringUtils.leftPad("|", 6) + System.lineSeparator()
-				+ StringUtils.leftPad(" ", 14) + StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 2)
+				+ this.valoracioMitjaEntrada() + StringUtils.leftPad("|", 5) + System.lineSeparator()
+				+ StringUtils.leftPad(" ", 14) + StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 16)
 				+ comentarisst.toString() + System.lineSeparator();
 
 		return res;

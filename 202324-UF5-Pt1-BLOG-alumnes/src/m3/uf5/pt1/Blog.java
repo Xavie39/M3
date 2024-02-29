@@ -1,7 +1,10 @@
 package m3.uf5.pt1;
 
+import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.Serializable;
@@ -142,6 +145,30 @@ public class Blog implements Serializable {
 			e.writeObject(entrades);
 			e.close();
 			System.out.println("Datos del blog guardados en el archivo: " + fitxer);
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void carregarDadesBlog(String fitxer) {
+		try {
+			XMLDecoder d = new XMLDecoder(new BufferedInputStream(new FileInputStream(fitxer)));
+
+			// Lee el conjunto de usuarios desde el archivo XML
+			HashSet<Usuari> usuarisFromXML = (HashSet<Usuari>) d.readObject();
+			// Actualiza el conjunto de usuarios del blog
+			usuaris.clear();
+			usuaris.addAll(usuarisFromXML);
+
+			// Lee el conjunto de entradas desde el archivo XML
+			TreeSet<Entrada> entradesFromXML = (TreeSet<Entrada>) d.readObject();
+			// Actualiza el conjunto de entradas del blog
+			entrades.clear();
+			entrades.addAll(entradesFromXML);
+
+			d.close();
+
+			System.out.println("Datos del blog cargados desde el archivo: " + fitxer);
 		} catch (FileNotFoundException ex) {
 			ex.printStackTrace();
 		}
