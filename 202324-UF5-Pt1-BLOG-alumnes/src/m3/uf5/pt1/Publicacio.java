@@ -7,6 +7,10 @@ public abstract class Publicacio {
 	protected String text;
 	protected Date data;
 
+	public Publicacio() {
+		super();
+	}
+
 	public Publicacio(Usuari usuari, String text) {
 		super();
 		this.usuari = usuari;

@@ -1,17 +1,23 @@
 package m3.uf5.pt1;
 
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Blog {
+public class Blog implements Serializable {
+	private static final long serialVersionUID = 1L;
 	public static final int AMPLE_LEFT = 15;
 	public static final int GAP = 3;
 	public static final int AMPLE_CONTENT = 60;
-	public HashSet<Usuari> usuaris = new HashSet<Usuari>();
-	public TreeSet<Entrada> entrades = new TreeSet<Entrada>();
+	public transient HashSet<Usuari> usuaris = new HashSet<Usuari>();
+	public transient TreeSet<Entrada> entrades = new TreeSet<Entrada>();
 
 	public Blog() {
 		super();
@@ -36,8 +42,7 @@ public class Blog {
 	private Entrada cercarEntradaPerDataTitol(Date data, String titol) {
 		for (Entrada entrada : entrades) {
 			Date endate = entrada.getData();
-			if (endate.equals(data) && entrada.getText().equals(titol)) {
-				System.out.println("hola");
+			if (entrada.getData().compareTo(endate) == 0 && entrada.getTitol().equals(titol)) {
 				return entrada;
 			}
 		}
@@ -90,7 +95,7 @@ public class Blog {
 	public void comentarEntrada(String mail, Date data, String titol, String text, int valoracio) throws Exception {
 		try {
 			Entrada en = cercarEntradaPerDataTitol(data, titol);
-			Usuari user = this.cercarUsuariPerMail(mail);
+			Usuari user = cercarUsuariPerMail(mail);
 			for (Entrada entrada : entrades) {
 				if (entrada.equals(en)) {
 					entrada.afegirComentari(user, text, valoracio);
@@ -130,8 +135,15 @@ public class Blog {
 		return header + sb.toString();
 	}
 
-	public void desarDadesBlog(String blogFilename) {
-		// TODO Auto-generated method stub
-
+	public void desarDadesBlog(String fitxer) {
+		try {
+			XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(fitxer)));
+			e.writeObject(usuaris);
+			e.writeObject(entrades);
+			e.close();
+			System.out.println("Datos del blog guardados en el archivo: " + fitxer);
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		}
 	}
 }

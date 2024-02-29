@@ -1,16 +1,21 @@
 package m3.uf5.pt1;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
-public class Usuari {
+public class Usuari implements Serializable {
+	private static final long serialVersionUID = 1L; // Número de versión
 	public int JUNIOR_LIMIT = 2;
 	public int SENIOR_LIMIT = 5;
 	private String nick;
 	private String mail;
 	// Cola
-	private Queue<Publicacio> publicacions = new LinkedList<>();
+	private transient Queue<Publicacio> publicacions = new LinkedList<>();
+
+	public Usuari() {
+	}
 
 	public Usuari(String mail, String nick) {
 		super();

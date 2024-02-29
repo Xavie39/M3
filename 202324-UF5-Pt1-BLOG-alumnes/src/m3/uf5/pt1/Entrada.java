@@ -1,5 +1,6 @@
 package m3.uf5.pt1;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,15 +8,21 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 
-public class Entrada extends Publicacio implements Comparable<Entrada> {
-	public static final String SEPARADOR = "I";
+public class Entrada extends Publicacio implements Comparable<Entrada>, Serializable {
+	private static final long serialVersionUID = 1L;
+	public static final String SEPARADOR = "|";
 	public static final String NOT_PROVIDED = "NA";
 	private String titol;
 	// Pila
 	private Deque<Comentari> comentaris = new LinkedList<>();
 
-	public Entrada(Usuari usuari, String titol, String text) {
+	public Entrada(Usuari usuari, String text) {
+		super(usuari, text);
+	}
+
+	public Entrada(Usuari usuari, String text, String titol) {
 		super(usuari, text);
 		this.titol = titol;
 	}
@@ -73,13 +80,17 @@ public class Entrada extends Publicacio implements Comparable<Entrada> {
 
 	public String valoracioMitjaEntrada() {
 		float suma = 0;
+		int total = 0;
 
 		for (Comentari comentari : comentaris) {
 			suma += comentari.getValoracio();
+			total++;
 		}
 
-		if (suma != 0) {
-			return String.format("%.1f", suma);
+		float res = suma / total;
+
+		if (res != 0) {
+			return String.format("%.1f", res);
 		}
 		return NOT_PROVIDED;
 	}
@@ -104,19 +115,54 @@ public class Entrada extends Publicacio implements Comparable<Entrada> {
 		// Formatear la fecha con el nombre del mes actual y el año actual
 		SimpleDateFormat sdf = new SimpleDateFormat("'" + nombreMesActual + "' yyyy");
 		String fechaFormateada = sdf.format(calendar.getTime());
+		StringBuilder comentarisst = new StringBuilder();
 
-		String pepe = "";
-		String res = fechaFormateada + StringUtils.leftPad("|", 4) + StringUtils.leftPad(" ", 15) + this.text
-				+ System.lineSeparator() + this.usuari.getNick() + " lv:" + this.usuari.nivellUsuari()
-				+ StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 2) + this.titol + System.lineSeparator()
-				+ StringUtils.leftPad("|", 16) + pepe + comentaris + System.lineSeparator() + "Mitja : "
-				+ this.valoracioMitjaEntrada() + StringUtils.leftPad("|", 6) + System.lineSeparator();
+		for (Comentari comen : comentaris) {
+			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+			String fechaFormateadacomen = formatoFecha.format(comen.getData());
+			comentarisst.append(comen.usuari.getNick()).append(".- ").append(comen.getText())
+					.append(System.lineSeparator()).append(StringUtils.leftPad("|", 16))
+					.append(StringUtils.leftPad(" ", 54)).append(fechaFormateadacomen).append(", valoracio: ")
+					.append(comen.getValoracio()).append("-Stars\n").append(StringUtils.leftPad("|", 16))
+					.append(StringUtils.leftPad(" ", 2)).append(System.lineSeparator())
+					.append(StringUtils.leftPad("|", 16)).append(StringUtils.leftPad(" ", 16));
+		}
 
-		if (!comentaris.isEmpty()) {
-			for (Comentari comen : comentaris) {
-				pepe += comen.getText() + comen.getValoracio();
+		int[] totalValoracionesPorEstrella = new int[4];
+
+		// Calcular el total de valoraciones para cada estrella
+		for (Comentari comen : comentaris) {
+			int valoracion = comen.getValoracio();
+			if (valoracion >= 0 && valoracion <= 3) {
+				totalValoracionesPorEstrella[valoracion]++;
 			}
 		}
+
+		// Construir la cadena de valoraciones por estrella
+		StringBuilder valoracionesPorEstrellaStr = new StringBuilder();
+		for (int i = 0; i < totalValoracionesPorEstrella.length; i++) {
+			valoracionesPorEstrellaStr.append(i).append("-Stars: ").append(totalValoracionesPorEstrella[i])
+					.append(StringUtils.leftPad("|", 6)).append("\n");
+		}
+
+		// Envolver el texto de la entrada para ajustarse al ancho especificado
+		String textoEnvuelto = WordUtils.wrap(this.text, 120, "\n", true);
+
+		String[] lineas = StringUtils.split(textoEnvuelto, "\n");
+		for (int i = 0; i < lineas.length; i++) {
+			lineas[i] = StringUtils.leftPad("|", 16) + StringUtils.leftPad(" ", 6) + lineas[i] + " ";
+		}
+
+		// Unir las líneas con un salto de línea
+		String textoConEspacios = StringUtils.join(lineas, "\n");
+
+		String res = fechaFormateada + StringUtils.leftPad("|", 4) + StringUtils.leftPad(" ", 30) + this.titol
+				+ System.lineSeparator() + this.usuari.getNick() + " lv:" + this.usuari.nivellUsuari()
+				+ textoConEspacios + System.lineSeparator() + valoracionesPorEstrellaStr.toString() + "Mitja : "
+				+ this.valoracioMitjaEntrada() + StringUtils.leftPad("|", 6) + System.lineSeparator()
+				+ StringUtils.leftPad(" ", 14) + StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 2)
+				+ comentarisst.toString() + System.lineSeparator();
+
 		return res;
 	}
 }
