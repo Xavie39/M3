@@ -35,7 +35,7 @@ public class Comentari extends Publicacio implements Serializable {
 	}
 
 	@Override
-	public String imprimirPublicacio(String ident, int width) {
+	public String imprimirPublicacio(int ident, int width) {
 		StringBuilder sb = new StringBuilder();
 
 		String firstColumn = StringUtils.repeat(" ", IDENT_COMMENT);

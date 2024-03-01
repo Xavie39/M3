@@ -113,7 +113,7 @@ public class Blog implements Serializable {
 		Entrada en = cercarEntradaPerDataTitol(data, titol);
 		for (Entrada entrada : entrades) {
 			if (entrada.equals(en)) {
-				entrada.imprimirPublicacio("", AMPLE_CONTENT);
+				entrada.imprimirPublicacio(12, AMPLE_CONTENT);
 			}
 		}
 		throw new Exception("Comentar o imprimir una entrada inexistent.");
@@ -130,7 +130,7 @@ public class Blog implements Serializable {
 		// Concatenar todas las entradas del blog
 		StringBuilder sb = new StringBuilder();
 		for (Entrada entrada : entrades) {
-			sb.append(entrada.imprimirPublicacio("", AMPLE_CONTENT));
+			sb.append(entrada.imprimirPublicacio(12, AMPLE_CONTENT));
 			sb.append("\n");
 		}
 

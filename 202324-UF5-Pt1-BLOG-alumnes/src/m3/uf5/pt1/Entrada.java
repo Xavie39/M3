@@ -104,7 +104,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 	}
 
 	@Override
-	public String imprimirPublicacio(String ident, int width) {
+	public String imprimirPublicacio(int ident, int width) {
 		String[] meses = { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE",
 				"OCTUBRE", "NOVIEMBRE", "DICIEMBRE" };
 		Calendar calendar = Calendar.getInstance();
@@ -132,18 +132,18 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 			// Agrega las líneas restantes del comentario con la barra al principio de cada
 			// línea
 			for (int i = 1; i < lineasComentario.length; i++) {
-				comentarisst.append(StringUtils.leftPad("|", 16)); // Agrega la barra al principio de la línea
+				comentarisst.append(StringUtils.leftPad(SEPARADOR, 16)); // Agrega la barra al principio de la línea
 				comentarisst.append(StringUtils.leftPad(" ", 28)); // Espacio después del prefijo "|"
 				comentarisst.append(lineasComentario[i]).append(System.lineSeparator());
 			}
 
 			// Agrega la fecha y valoración del comentario
-			comentarisst.append(StringUtils.leftPad("|", 16));
+			comentarisst.append(StringUtils.leftPad(SEPARADOR, 16));
 			comentarisst.append(StringUtils.leftPad(" ", 28)).append(fechaFormateadacomen).append(", valoracio: ");
 			comentarisst.append(comen.getValoracio()).append("-Stars").append(System.lineSeparator());
-			comentarisst.append(StringUtils.leftPad("|", 16));
+			comentarisst.append(StringUtils.leftPad(SEPARADOR, 16));
 			comentarisst.append(StringUtils.leftPad(" ", 2)).append(System.lineSeparator());
-			comentarisst.append(StringUtils.leftPad("|", 16));
+			comentarisst.append(StringUtils.leftPad(SEPARADOR, 16));
 			comentarisst.append(StringUtils.leftPad(" ", 16));
 		});
 
@@ -161,7 +161,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 		StringBuilder valoracionesPorEstrellaStr = new StringBuilder();
 		for (int i = 0; i < totalValoracionesPorEstrella.length; i++) {
 			valoracionesPorEstrellaStr.append(i).append("-Stars: ").append(totalValoracionesPorEstrella[i])
-					.append(StringUtils.leftPad("|", 6)).append("\n");
+					.append(StringUtils.leftPad(SEPARADOR, 6)).append("\n");
 		}
 
 		// Envolver el texto de la entrada para ajustarse al ancho especificado
@@ -170,22 +170,23 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 		String[] lineas = StringUtils.split(textoEnvuelto, "\n");
 
 		// Tratar la primera línea por separado sin agregar un espacio al principio
-		lineas[0] = StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 6) + lineas[0] + " ";
+		lineas[0] = StringUtils.leftPad(SEPARADOR, 2) + StringUtils.leftPad(" ", 6) + lineas[0] + " ";
 
 		// Para las líneas restantes, agregar un espacio al principio y una barra
 		for (int i = 1; i < lineas.length; i++) {
-			lineas[i] = StringUtils.leftPad("|", 16) + StringUtils.leftPad(" ", 5) + lineas[i] + " ";
+			lineas[i] = StringUtils.leftPad(SEPARADOR, 16) + StringUtils.leftPad(" ", 5) + lineas[i] + " ";
 		}
 
 		// Unir las líneas con un salto de línea
 		String textoConEspacios = StringUtils.join(lineas, "\n");
 
-		String res = fechaFormateada + StringUtils.leftPad("|", 4) + StringUtils.leftPad(" ", 30) + this.titol
-				+ System.lineSeparator() + this.usuari.getNick() + " lv:" + this.usuari.nivellUsuari()
-				+ textoConEspacios + System.lineSeparator() + valoracionesPorEstrellaStr.toString() + "Mitja : "
-				+ this.valoracioMitjaEntrada() + StringUtils.leftPad("|", 5) + System.lineSeparator()
-				+ StringUtils.leftPad(" ", 14) + StringUtils.leftPad("|", 2) + StringUtils.leftPad(" ", 16)
-				+ comentarisst.toString() + System.lineSeparator();
+		String res = fechaFormateada + StringUtils.leftPad(SEPARADOR, 6) + StringUtils.leftPad(" ", 30)
+				+ this.titol.toUpperCase() + System.lineSeparator() + this.usuari.getNick() + " lv:"
+				+ this.usuari.nivellUsuari() + textoConEspacios + System.lineSeparator()
+				+ valoracionesPorEstrellaStr.toString() + "Mitja : " + this.valoracioMitjaEntrada()
+				+ StringUtils.leftPad(SEPARADOR, 5) + System.lineSeparator() + StringUtils.leftPad(" ", 14)
+				+ StringUtils.leftPad(SEPARADOR, 2) + StringUtils.leftPad(" ", 16) + comentarisst.toString()
+				+ System.lineSeparator();
 
 		return res;
 	}
