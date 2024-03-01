@@ -95,14 +95,6 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 		return NOT_PROVIDED;
 	}
 
-	private int getTotalValoracions() {
-		int total = 0;
-		for (Comentari comentari : comentaris) {
-			total += comentari.getValoracio();
-		}
-		return total;
-	}
-
 	@Override
 	public String imprimirPublicacio(int ident, int width) {
 		String[] meses = { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE",

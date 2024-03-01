@@ -30,7 +30,7 @@ public class Comentari extends Publicacio implements Serializable {
 		if (containsValoracio(valoracio)) {
 			this.valoracio = valoracio;
 		} else {
-			throw new IllegalArgumentException("La valoració proporcionada no és vàlida.");
+			throw new IllegalArgumentException("Comentaris amb valoracions incorrectes.");
 		}
 	}
 

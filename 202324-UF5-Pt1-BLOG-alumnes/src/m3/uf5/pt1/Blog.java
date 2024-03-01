@@ -86,13 +86,18 @@ public class Blog implements Serializable {
 	}
 
 	public void afegirEntrada(String mail, String text, String titol) throws Exception {
-		for (Entrada entrada : entrades) {
-			if (entrada.getTitol().equals(titol)) {
-				throw new Exception("Dues entrades del mateix dia amb el mateix «titol»");
+		try {
+			for (Entrada entrada : entrades) {
+				if (entrada.getTitol().equals(titol)) {
+					throw new Exception("Dues entrades del mateix dia amb el mateix «titol»");
+				}
 			}
+			Usuari user = cercarUsuariPerMail(mail);
+			entrades.add(new Entrada(user, titol, text));
+		} catch (NullPointerException e) {
+			System.out.println("Entrades amb «titol» sense valor o nul.");
 		}
-		Usuari user = cercarUsuariPerMail(mail);
-		entrades.add(new Entrada(user, titol, text));
+
 	}
 
 	public void comentarEntrada(String mail, Date data, String titol, String text, int valoracio) throws Exception {
@@ -105,7 +110,7 @@ public class Blog implements Serializable {
 				}
 			}
 		} catch (NullPointerException e) {
-			System.out.println("Comentari nul");
+			System.out.println("Comentar o imprimir una entrada inexistent.");
 		}
 	}
 
@@ -146,7 +151,7 @@ public class Blog implements Serializable {
 			e.close();
 			System.out.println("Datos del blog guardados en el archivo: " + fitxer);
 		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
+			System.out.println("Fichero no encontrado");
 		}
 	}
 
@@ -170,7 +175,7 @@ public class Blog implements Serializable {
 
 			System.out.println("Datos del blog cargados desde el archivo: " + fitxer);
 		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
+			System.out.println("Fichero no encontrado");
 		}
 	}
 }
