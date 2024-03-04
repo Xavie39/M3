@@ -43,6 +43,6 @@ public abstract class Publicacio {
 		this.data = data;
 	}
 
-	public abstract String imprimirPublicacio(int ident, int width);
+	public abstract String imprimirPublicacio(String ident, int width);
 
 }

@@ -96,7 +96,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 	}
 
 	@Override
-	public String imprimirPublicacio(int ident, int width) {
+	public String imprimirPublicacio(String string, int width) {
 		String[] meses = { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE",
 				"OCTUBRE", "NOVIEMBRE", "DICIEMBRE" };
 		Calendar calendar = Calendar.getInstance();
