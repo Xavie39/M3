@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="21.0.2" class="java.beans.XMLDecoder">
+<java version="17.0.6" class="java.beans.XMLDecoder">
  <object class="java.util.HashSet">
   <void method="add">
-   <object class="m3.uf5.pt1.Usuari" id="Usuari0">
+   <object class="m3.uf5.pt1.Usuari">
     <void property="mail">
      <string>joan@marianao.lan</string>
     </void>
@@ -22,7 +22,7 @@
    </object>
   </void>
   <void method="add">
-   <object class="m3.uf5.pt1.Usuari" id="Usuari1">
+   <object class="m3.uf5.pt1.Usuari" id="Usuari0">
     <void property="mail">
      <string>pere@marianao.lan</string>
     </void>
@@ -34,7 +34,7 @@
       <object class="m3.uf5.pt1.Entrada" id="Entrada0">
        <void property="data">
         <object class="java.util.Date">
-         <long>1709596852916</long>
+         <long>1709650606901</long>
         </object>
        </void>
        <void property="text">
@@ -44,7 +44,7 @@
         <string>Lorem ipsum I</string>
        </void>
        <void property="usuari">
-        <object idref="Usuari1"/>
+        <object idref="Usuari0"/>
        </void>
       </object>
      </void>
@@ -52,7 +52,7 @@
       <object class="m3.uf5.pt1.Entrada" id="Entrada1">
        <void property="data">
         <object class="java.util.Date">
-         <long>1709596852916</long>
+         <long>1709650606901</long>
         </object>
        </void>
        <void property="text">
@@ -62,7 +62,7 @@
         <string>Lorem ipsum II</string>
        </void>
        <void property="usuari">
-        <object idref="Usuari1"/>
+        <object idref="Usuari0"/>
        </void>
       </object>
      </void>
@@ -70,7 +70,7 @@
       <object class="m3.uf5.pt1.Entrada" id="Entrada2">
        <void property="data">
         <object class="java.util.Date">
-         <long>1709596852916</long>
+         <long>1709650606901</long>
         </object>
        </void>
        <void property="text">
@@ -80,7 +80,7 @@
         <string>Lorem ipsum infinitum</string>
        </void>
        <void property="usuari">
-        <object idref="Usuari1"/>
+        <object idref="Usuari0"/>
        </void>
       </object>
      </void>
@@ -91,14 +91,14 @@
          <object class="m3.uf5.pt1.Comentari" id="Comentari0">
           <void property="data">
            <object class="java.util.Date">
-            <long>1709596852918</long>
+            <long>1709650606902</long>
            </object>
           </void>
           <void property="text">
            <string>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,... </string>
           </void>
           <void property="usuari">
-           <object idref="Usuari1"/>
+           <object idref="Usuari0"/>
           </void>
           <void property="valoracio">
            <int>3</int>
@@ -109,14 +109,14 @@
          <object class="m3.uf5.pt1.Comentari" id="Comentari1">
           <void property="data">
            <object class="java.util.Date">
-            <long>1709596852918</long>
+            <long>1709650606902</long>
            </object>
           </void>
           <void property="text">
            <string>...sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</string>
           </void>
           <void property="usuari">
-           <object idref="Usuari1"/>
+           <object idref="Usuari0"/>
           </void>
           <void property="valoracio">
            <int>3</int>
@@ -127,14 +127,14 @@
          <object class="m3.uf5.pt1.Comentari" id="Comentari2">
           <void property="data">
            <object class="java.util.Date">
-            <long>1709596852918</long>
+            <long>1709650606902</long>
            </object>
           </void>
           <void property="text">
            <string>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit </string>
           </void>
           <void property="usuari">
-           <object class="m3.uf5.pt1.Usuari" id="Usuari2">
+           <object class="m3.uf5.pt1.Usuari" id="Usuari1">
             <void property="mail">
              <string>maria@marianao.lan</string>
             </void>
@@ -149,23 +149,17 @@
               <object class="m3.uf5.pt1.Comentari" id="Comentari3">
                <void property="data">
                 <object class="java.util.Date">
-                 <long>1709596852918</long>
+                 <long>1709650606902</long>
                 </object>
                </void>
                <void property="text">
                 <string>laboriosam, nisi ut aliquid ex ea commodi consequatur?</string>
                </void>
                <void property="usuari">
-                <object idref="Usuari2"/>
+                <object idref="Usuari1"/>
                </void>
                <void property="valoracio">
-                <void class="m3.uf5.pt1.Usuari" id="Field0" method="getField">
-                 <string>JUNIOR_LIMIT</string>
-                 <void id="Integer0" method="get">
-                  <object idref="Usuari0"/>
-                 </void>
-                </void>
-                <object idref="Integer0"/>
+                <int>2</int>
                </void>
               </object>
              </void>
@@ -173,7 +167,7 @@
            </object>
           </void>
           <void property="valoracio">
-           <object idref="Integer0"/>
+           <int>2</int>
           </void>
          </object>
         </void>
@@ -183,7 +177,7 @@
        </void>
        <void property="data">
         <object class="java.util.Date">
-         <long>1709596852917</long>
+         <long>1709650606901</long>
         </object>
        </void>
        <void property="text">
@@ -193,7 +187,7 @@
         <string>I Cicero</string>
        </void>
        <void property="usuari">
-        <object idref="Usuari1"/>
+        <object idref="Usuari0"/>
        </void>
       </object>
      </void>
@@ -204,24 +198,24 @@
          <object class="m3.uf5.pt1.Comentari" id="Comentari4">
           <void property="data">
            <object class="java.util.Date">
-            <long>1709596852918</long>
+            <long>1709650606902</long>
            </object>
           </void>
           <void property="text">
            <string>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</string>
           </void>
           <void property="usuari">
-           <object idref="Usuari1"/>
+           <object idref="Usuari0"/>
           </void>
           <void property="valoracio">
-           <object idref="Integer0"/>
+           <int>2</int>
           </void>
          </object>
         </void>
        </void>
        <void property="data">
         <object class="java.util.Date">
-         <long>1709596852917</long>
+         <long>1709650606901</long>
         </object>
        </void>
        <void property="text">
@@ -231,7 +225,7 @@
         <string>II Cicero</string>
        </void>
        <void property="usuari">
-        <object idref="Usuari1"/>
+        <object idref="Usuari0"/>
        </void>
       </object>
      </void>
@@ -248,10 +242,16 @@
    </object>
   </void>
   <void method="add">
-   <object idref="Usuari2"/>
+   <object idref="Usuari1"/>
   </void>
  </object>
  <object class="java.util.TreeSet">
+  <void method="add">
+   <object idref="Entrada3"/>
+  </void>
+  <void method="add">
+   <object idref="Entrada4"/>
+  </void>
   <void method="add">
    <object idref="Entrada0"/>
   </void>
@@ -260,12 +260,6 @@
   </void>
   <void method="add">
    <object idref="Entrada2"/>
-  </void>
-  <void method="add">
-   <object idref="Entrada3"/>
-  </void>
-  <void method="add">
-   <object idref="Entrada4"/>
   </void>
  </object>
 </java>

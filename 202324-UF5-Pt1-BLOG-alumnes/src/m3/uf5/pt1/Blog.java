@@ -19,11 +19,10 @@ public class Blog implements Serializable {
 	public static final int AMPLE_LEFT = 15;
 	public static final int GAP = 3;
 	public static final int AMPLE_CONTENT = 60;
-	public transient HashSet<Usuari> usuaris = new HashSet<Usuari>();
-	public transient TreeSet<Entrada> entrades = new TreeSet<Entrada>();
+	public HashSet<Usuari> usuaris = new HashSet<Usuari>();
+	public TreeSet<Entrada> entrades = new TreeSet<Entrada>();
 
 	public Blog() {
-		super();
 	}
 
 	public HashSet<Usuari> getUsuaris() {
@@ -54,7 +53,7 @@ public class Blog implements Serializable {
 
 	private Usuari cercarUsuariPerMail(String mail) {
 		for (Usuari usuari : usuaris) {
-			if (usuari.getMail().equals(mail)) {
+			if (usuari.getMail().equalsIgnoreCase(mail)) {
 				return usuari;
 			}
 
@@ -85,7 +84,7 @@ public class Blog implements Serializable {
 		}
 	}
 
-	public void afegirEntrada(String mail, String text, String titol) throws Exception {
+	public void afegirEntrada(String mail, String titol, String text) throws Exception {
 		try {
 			for (Entrada entrada : entrades) {
 				if (entrada.getTitol().equals(titol)) {
@@ -93,7 +92,7 @@ public class Blog implements Serializable {
 				}
 			}
 			Usuari user = cercarUsuariPerMail(mail);
-			entrades.add(new Entrada(user, titol, text));
+			entrades.add(new Entrada(user, text, titol));
 		} catch (NullPointerException e) {
 			System.out.println("Entrades amb «titol» sense valor o nul.");
 		}

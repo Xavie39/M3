@@ -166,7 +166,7 @@ public class Entrada extends Publicacio implements Comparable<Entrada>, Serializ
 
 		// Para las líneas restantes, agregar un espacio al principio y una barra
 		for (int i = 1; i < lineas.length; i++) {
-			lineas[i] = StringUtils.leftPad(SEPARADOR, 16) + StringUtils.leftPad(" ", 5) + lineas[i] + " ";
+			lineas[i] = StringUtils.leftPad(SEPARADOR, 16) + StringUtils.leftPad(" ", 6) + lineas[i] + " ";
 		}
 
 		// Unir las líneas con un salto de línea
